@@ -1,17 +1,29 @@
-name: "JS Actions"
+name: JS Actions
 
-on: [push]
+on:
+  push: 
+    branches: [ master, action-three ]
+  pull_request:
+    types: [ labeled ]
 
 jobs:
   action:
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v1
 
       - name: hello-action
         uses: ./.github/actions/hello-world
-      
+
       - name: ha-ha
         uses: ./.github/actions/joke-action
+        id: jokes
+
+      - name: create-issue
+        uses: ./.github/actions/issue-maker
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          joke: ${{steps.jokes.outputs.joke-output}}
 
 
