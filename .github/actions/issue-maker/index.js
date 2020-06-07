@@ -7,7 +7,7 @@ async function run() {
     const jokeBody = core.getInput("joke");
     const token = core.getInput("repo-token");
 
-    const octokit = new github.GitHub(token);
+    const octokit = github.GitHub(token);
 
   } catch (error) {
     core.setFailed(error.message);
