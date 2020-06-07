@@ -7,7 +7,15 @@ async function run() {
     const jokeBody = core.getInput("joke");
     const token = core.getInput("repo-token");
 
-    const octokit = github.GitHub(token);
+    console.log(github);
+    const octokit = new github.GitHub(token);
+
+    await octokit.issues.create({
+      repo: github.context.repo.repo,
+      owner: github.context.repo.owner,
+      title: issueTitle,
+      body: jokeBody
+    });
 
   } catch (error) {
     core.setFailed(error.message);
